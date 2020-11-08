@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+John Mordi
+Assignment #7
+Allows the player to control their character
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +29,10 @@ public class PlayerController : MonoBehaviour
     {
         forwardInput = Input.GetAxis("Vertical");
         powerupIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
+        if(transform.position.y <= -10)
+        {
+            WinLossManager.gameOver = true;
+        }
     }
 
     private void FixedUpdate()

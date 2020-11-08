@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+John Mordi
+Assignment #7
+Enemies constantly move to the players goal and checks for collisions with both goals
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +17,8 @@ public class EnemyX : MonoBehaviour
     void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
+        playerGoal = GameObject.FindGameObjectWithTag("PlayerGoal");
+        speed = SpawnManagerX.speed;
     }
 
     // Update is called once per frame
@@ -32,6 +39,7 @@ public class EnemyX : MonoBehaviour
         } 
         else if (other.gameObject.name == "Player Goal")
         {
+            WinLossManagerX.enemyScored++;
             Destroy(gameObject);
         }
 

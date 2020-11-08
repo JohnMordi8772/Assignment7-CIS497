@@ -1,30 +1,58 @@
-﻿using System.Collections;
+﻿/*
+John Mordi
+Assignment #7
+Manages the spawn of enemies and powerups, also manages the wave resets
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnManagerX : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public GameObject powerupPrefab;
+    public Text winLossText;
 
     private float spawnRangeX = 10;
     private float spawnZMin = 15; // set min spawn Z
     private float spawnZMax = 25; // set max spawn Z
 
     public int enemyCount;
-    public int waveCount = 1;
+    public int waveCount;
 
+    public static float speed;
 
-    public GameObject player; 
+    public GameObject player;
+
+    private void Start()
+    {
+        speed = 25;
+    }
 
     // Update is called once per frame
     void Update()
     {
-        enemyCount = GameObject.FindGameObjectsWithTag("Powerup").Length;
-
-        if (enemyCount == 0)
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        
+        if (WinLossManagerX.enemyScored != waveCount)
         {
-            SpawnEnemyWave(waveCount);
+            if (waveCount == 10 && enemyCount == 0)
+            {
+                WinLossManagerX.gameOver = true;
+                WinLossManagerX.win = true;
+            }
+            if (enemyCount == 0 && !WinLossManagerX.gameOver && WinLossManagerX.gameStart)
+            {
+                waveCount++;
+                winLossText.text = "Wave: " + waveCount;
+                WinLossManagerX.enemyScored = 0;
+                SpawnEnemyWave(waveCount);
+            }
+        }
+        else
+        {
+            WinLossManagerX.gameOver = true;
         }
 
     }
@@ -49,12 +77,13 @@ public class SpawnManagerX : MonoBehaviour
         }
 
         // Spawn number of enemy balls based on wave number
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < waveCount; i++)
         {
             Instantiate(enemyPrefab, GenerateSpawnPosition(), enemyPrefab.transform.rotation);
         }
 
-        waveCount++;
+        
+        speed = speed * 1.25f;
         ResetPlayerPosition(); // put player back at start
 
     }

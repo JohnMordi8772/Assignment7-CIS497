@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿/*
+John Mordi
+Assignment #7
+Rotates camera around focal point with player input
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

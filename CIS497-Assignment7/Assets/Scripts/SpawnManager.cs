@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿/*
+John Mordi
+Assignment #7
+Manages the spawn of enemies and powerups
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
+    public Text winLossText;
     public GameObject enemyPrefab;
     public GameObject powerupPrefab;
     private float spawnRange = 9;
@@ -13,8 +20,6 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpawnEnemyWave(waveNumber);
-        SpawnPowerup(1);
     }
 
     private void SpawnEnemyWave(int enemiesToSpawn)
@@ -46,11 +51,18 @@ public class SpawnManager : MonoBehaviour
     {
         enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
-        if (enemyCount == 0)
+        if(waveNumber == 10 && enemyCount == 0)
+        {
+            WinLossManager.gameOver = true;
+            WinLossManager.win = true;
+        }
+        if (enemyCount == 0 && !WinLossManager.gameOver && WinLossManager.gameStart)
         {
             waveNumber++;
+            winLossText.text = "Wave: " + waveNumber;
             SpawnEnemyWave(waveNumber);
             SpawnPowerup(1);
         }
+        
     }
 }

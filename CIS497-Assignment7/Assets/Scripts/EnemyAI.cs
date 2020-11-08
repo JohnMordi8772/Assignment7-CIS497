@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+John Mordi
+Assignment #7
+Makes the enemies constantly try to run into the player and push them off
+*/
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
